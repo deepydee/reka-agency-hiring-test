@@ -122,7 +122,7 @@ class TaskList extends Component
         $task->save();
     }
 
-    public function deleteConfirm($method, $id = null)
+    public function deleteConfirm($method, $id = null): void
     {
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'   => 'warning',
@@ -131,6 +131,11 @@ class TaskList extends Component
             'id'     => $id,
             'method' => $method,
         ]);
+    }
+
+    public function deleteTaskImage(Task $task): void
+    {
+        $task->clearMediaCollection('task-image');
     }
 
     public function render(): View
