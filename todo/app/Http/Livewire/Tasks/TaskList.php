@@ -20,12 +20,15 @@ class TaskList extends Component
     public ?array $tags = [];
     public string $taskTitle = '';
     public int $editedTaskId = 0;
+    public $thumbnail;
+    public bool $updateThumb = false;
 
     protected function rules(): array
     {
         return [
             'taskTitle' => ['required', 'string', 'min:3', 'max:255'],
             'tags' => ['nullable', 'array'],
+            'thumbnail' => ['nullable', 'image'],
         ];
     }
 
@@ -40,9 +43,14 @@ class TaskList extends Component
         $this->validateOnly('taskTitle');
     }
 
+    public function updatedThumbnail()
+    {
+        $this->validateOnly('thumbnail');
+        $this->updateThumb = true;
+    }
+
     public function save(): void
     {
-        dd($this->tags);
         $this->validate();
 
         if ($this->editedTaskId === 0) {
@@ -53,6 +61,15 @@ class TaskList extends Component
         $this->task->user_id = auth()->user()->id;
 
         $this->task->save();
+
+        if ($this->updateThumb) {
+            $this->task->clearMediaCollection('task-image');
+            $this->task
+                ->addMedia($this->thumbnail)
+                ->toMediaCollection('task-image');
+
+            $this->updateThumb = false;
+        }
 
         if (! empty($this->tags) && $this->tags[0] !== '') {
             $addedTagsIds = [];
