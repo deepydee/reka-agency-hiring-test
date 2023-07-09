@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css" />
+    @stack('styles')
     @livewireStyles
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -83,6 +83,7 @@
         </main>
     </div>
     @livewireScripts
+    @stack('js')
 </body>
 
 </html>

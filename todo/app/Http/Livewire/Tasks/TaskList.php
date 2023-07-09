@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tasks;
 
+use App\Models\Tag;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -16,6 +17,7 @@ class TaskList extends Component
 
     public ?Task $task;
     public Collection $tasks;
+    public ?array $tags = [];
     public string $taskTitle = '';
     public int $editedTaskId = 0;
 
@@ -23,6 +25,7 @@ class TaskList extends Component
     {
         return [
             'taskTitle' => ['required', 'string', 'min:3', 'max:255'],
+            'tags' => ['nullable', 'array'],
         ];
     }
 
@@ -39,6 +42,7 @@ class TaskList extends Component
 
     public function save(): void
     {
+        dd($this->tags);
         $this->validate();
 
         if ($this->editedTaskId === 0) {
@@ -49,7 +53,20 @@ class TaskList extends Component
         $this->task->user_id = auth()->user()->id;
 
         $this->task->save();
-        $this->reset('taskTitle');
+
+        if (! empty($this->tags) && $this->tags[0] !== '') {
+            $addedTagsIds = [];
+
+            foreach ($this->tags as $tag) {
+                $newTag = Tag::create(['title' => $tag]);
+                $addedTagsIds[] = $newTag->id;
+            }
+
+            $this->task->tags()->sync($addedTagsIds);
+            $this->dispatchBrowserEvent('clearStore');
+        }
+
+        $this->reset('taskTitle', 'tags');
         $this->resetValidation();
         $this->editedTaskId = 0;
     }
@@ -59,12 +76,15 @@ class TaskList extends Component
         $this->editedTaskId = $task->id;
         $this->task = $task;
         $this->taskTitle = $task->title;
+        $this->tags = $task->tags()->pluck('title')->toArray();
+        $this->dispatchBrowserEvent('editTask', ['tags' => $this->tags]);
     }
 
     public function cancelEdit(): void
     {
         $this->resetValidation();
-        $this->reset('editedTaskId');
+        $this->reset('editedTaskId', 'taskTitle');
+        $this->dispatchBrowserEvent('clearStore');
     }
 
     public function delete(Task $task): void

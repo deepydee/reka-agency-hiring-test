@@ -3,6 +3,7 @@
         <div class="fw-bold fs-5 text-indigo my-3">{{ __('Му TODO List') }}</div>
         <div class="row">
             <div class="col-md-12">
+                @if ($editedTaskId === 0)
                 <div class="input-group mb-3">
                     <div class="form-floating">
                         <input wire:model.lazy="taskTitle" wire:keydown.enter="save" type="text" id="addTask"
@@ -17,6 +18,21 @@
                     </span>
                     @enderror
                 </div>
+                @endif
+                {{-- <div class="input-group mb-3">
+                    <div class="form-floating">
+                        <input wire:model.lazy="tags" type="text" id="addTags"
+                            class="form-control py-2 @error('tags') is-invalid @enderror"
+                            placeholder="{{ __('Add tags') }}" aria-label="Add tags">
+                        <label for="addTags">{{ __('Add tags') }}</label>
+                    </div>
+                    @error('tags')
+                    <span class="invalid-feedback">
+                        {{ $message }}
+                    </span>
+                    @enderror
+                </div> --}}
+                <x-choices wire:model="tags" id="tags" name="tags" />
             </div>
         </div>
         <div class="row">
@@ -44,9 +60,14 @@
                                     @checked($task->completed_at)
                                 class="form-check-input me-1 p-2 align-sub"
                                 >
-                                <span @class(['text-decoration-line-through'=> $task->completed_at])>
+                                <span @class(['todo__title', 'text-decoration-line-through'=> $task->completed_at])>
                                     {{ $task->title }}
                                 </span>
+                                @if ($task->tags)
+                                    @foreach ($task->tags as $tag)
+                                    <span class="tag__item">#{{ $tag->title }}</span>
+                                    @endforeach
+                                @endif
                             </span>
                             <div>
                                 @if ($editedTaskId === $task->id)
