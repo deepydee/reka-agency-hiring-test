@@ -42,8 +42,8 @@
                     </select>
                 </div>
 
-                <a href="{{ route('lists.index') }}" class="btn btn-dark">{{ __('Cancel') }}</a>
                 <button type="submit" class="btn btn-dark">{{ __('Edit') }}</button>
+                <a href="{{ route('lists.index') }}" class="btn btn-dark">{{ __('Cancel') }}</a>
             </form>
         </div>
     </div>

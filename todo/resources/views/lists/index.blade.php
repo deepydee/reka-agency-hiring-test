@@ -57,13 +57,6 @@
                     </div>
                     <div class="card-footer d-flex flex-wrap gap-2">
                         <a href="{{ route('lists.show', $list) }}" class="btn btn-dark">{{ __('View') }}</a>
-                        <a href="{{ route('lists.edit', $list) }}" class="btn btn-dark">{{ __('Edit') }}</a>
-                        <form action="{{ route('lists.destroy', $list) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">{{
-                                __('Delete') }}</button>
-                        </form>
                     </div>
                 </div>
             </div>

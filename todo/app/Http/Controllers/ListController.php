@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Livewire\Tasks\TaskList as TasksTaskList;
 use App\Http\Requests\StoreTaskListRequest;
 use App\Http\Requests\UpdateTaskListRequest;
 use App\Models\TaskList;
@@ -10,6 +9,7 @@ use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class ListController extends Controller
 {
@@ -48,6 +48,11 @@ class ListController extends Controller
             auth()->id(),
         ];
 
+        // foreach($request->users as $uid) {
+        //     $user = User::findOrFail($uid);
+        //     $user->givePermissionsTo('update');
+        // }
+
         if ($request->users) {
             $attachedUsersIds = array_merge($attachedUsersIds, $request->users);
         }
@@ -68,6 +73,8 @@ class ListController extends Controller
      */
     public function show(TaskList $list): View
     {
+        Gate::allowIf(fn (User $user) => in_array($user->id, $list->users()->pluck('id')->toArray()));
+
         return view('lists.show', compact('list'));
     }
 
@@ -76,6 +83,8 @@ class ListController extends Controller
      */
     public function edit(TaskList $list)
     {
+        Gate::allowIf(fn (User $user) => $user->id === $list->owner_id);
+
         $list->load('users');
         $users = User::all()->except(auth()->id());
 
@@ -87,6 +96,8 @@ class ListController extends Controller
      */
     public function update(UpdateTaskListRequest $request, TaskList $list)
     {
+        Gate::allowIf(fn (User $user) => $user->id === $list->owner_id);
+
         $attachedUsersIds = [
             auth()->id(),
         ];
@@ -111,6 +122,8 @@ class ListController extends Controller
      */
     public function destroy(TaskList $list): RedirectResponse
     {
+        Gate::allowIf(fn (User $user) => $user->id === $list->owner_id);
+
         if ($list->users()->count()) {
             return to_route('lists.index')
                 ->with('message', __('You should remove all child tasks before remove this list'));
