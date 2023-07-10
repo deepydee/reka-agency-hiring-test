@@ -110,9 +110,12 @@ class Tasks extends Component
         $this->task = null;
     }
 
-    public function markTaskCompleted(Task $task)
+    public function toggleTaskCompleted(Task $task)
     {
-        $task->completed_at = Carbon::now();
+        $task->completed_at = $task->completed_at
+            ? null
+            : Carbon::now();
+
         $task->save();
     }
 

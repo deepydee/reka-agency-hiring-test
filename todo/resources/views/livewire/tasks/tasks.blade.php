@@ -45,7 +45,7 @@
                     <li class="list-group-item" :wire:key="{{'task-details-'.$task->id }}">
                         <div class="d-flex justify-content-between align-items-end">
                             <span {{ $editedTaskId===$task->id ? 'hidden' : '' }}>
-                                <input wire:click="markTaskCompleted({{ $task->id }})" type="checkbox"
+                                <input wire:click="toggleTaskCompleted({{ $task->id }})" type="checkbox"
                                     @checked($task->completed_at)
                                 class="form-check-input me-1 p-2 align-sub"
                                 >
@@ -53,8 +53,9 @@
                                 @if ($task->getFirstMedia('task-image'))
                                 <a href="{{ $task->getFirstMediaURL('task-image') }}" target="_blank">
                                     <img src="{{ $task->getFirstMediaURL('task-image', 'thumb') }}"
-                                        alt="{{ $task->title }}" class="img-thumbnail" width="150" height="150"
-                                        title="{{ __('View full sized photo') }}">
+                                        alt="{{ $task->title }}" width="150" height="150"
+                                        title="{{ __('View full sized photo') }}"
+                                        @class(['img-thumbnail', 'done'=> $task->completed_at])>
                                 </a>
                                 <i wire:click="deleteTaskImage({{ $task }})" class="bi bi-trash3 text-danger" role="button" title="{{ __('Delete image') }}"></i>
                                 @endif
