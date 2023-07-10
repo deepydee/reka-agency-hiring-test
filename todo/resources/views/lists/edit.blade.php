@@ -42,6 +42,20 @@
                     </select>
                 </div>
 
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="can-update" name="canUpdate" @checked($list->users->last()->hasPermissionTo('update'))>
+                    <label class="form-check-label" for="can-update">
+                      {{ __('Can update') }}
+                    </label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="can-delete" name="canDelete" @checked($list->users->last()->hasPermissionTo('delete'))>
+                    <label class="form-check-label" for="can-delete">
+                      {{ __('Can delete') }}
+                    </label>
+                </div>
+
                 <button type="submit" class="btn btn-dark">{{ __('Edit') }}</button>
                 <a href="{{ route('lists.index') }}" class="btn btn-dark">{{ __('Cancel') }}</a>
             </form>

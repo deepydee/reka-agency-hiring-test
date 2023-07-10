@@ -36,9 +36,23 @@
                     <label for="usersToShare">{{ __('Share with') }}</label>
                     <select multiple class="form-control" id="usersToShare" name="users[]">
                         @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        <option value="{{ $user->id }}" @selected(collect(old('users'))->contains($user->id))>{{ $user->name }}</option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="can-update" name="canUpdate" @checked(old('canUpdate'))>
+                    <label class="form-check-label" for="can-update">
+                      {{ __('Can update') }}
+                    </label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="can-delete" name="canDelete" @checked(old('canDelete'))>
+                    <label class="form-check-label" for="can-delete">
+                      {{ __('Can delete') }}
+                    </label>
                 </div>
 
                 <button type="submit" class="btn btn-dark">{{ __('Create') }}</button>

@@ -6,13 +6,14 @@ use App\Models\Tag;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Tasks extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, AuthorizesRequests;
 
     public $list;
     public ?Task $task;
@@ -58,6 +59,7 @@ class Tasks extends Component
 
         if ($this->editedTaskId === 0) {
             $this->task = new Task();
+            $this->authorize('create', $this->list);
         }
 
         $this->task->title = $this->taskTitle;
@@ -93,6 +95,8 @@ class Tasks extends Component
 
     function edit(Task $task): void
     {
+        $this->authorize('update', $this->list);
+
         $this->editedTaskId = $task->id;
         $this->task = $task;
         $this->taskTitle = $task->title;
@@ -109,12 +113,16 @@ class Tasks extends Component
 
     public function delete(Task $task): void
     {
+        $this->authorize('delete', $this->list);
+
         $task->delete();
         $this->task = null;
     }
 
     public function toggleTaskCompleted(Task $task)
     {
+        $this->authorize('update', $this->list);
+
         $task->completed_at = $task->completed_at
             ? null
             : Carbon::now();
@@ -124,6 +132,8 @@ class Tasks extends Component
 
     public function unmarkTaskCompleted(Task $task)
     {
+        $this->authorize('update', $this->list);
+
         $task->completed_at = null;
         $task->save();
     }
@@ -141,6 +151,8 @@ class Tasks extends Component
 
     public function deleteTaskImage(Task $task): void
     {
+        $this->authorize('delete', $this->list);
+
         $task->clearMediaCollection('task-image');
     }
 

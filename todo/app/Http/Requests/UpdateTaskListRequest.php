@@ -23,6 +23,8 @@ class UpdateTaskListRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
+            'canUpdate' => ['nullable'],
+            'canDelete' => ['nullable'],
         ];
     }
 }

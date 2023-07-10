@@ -48,10 +48,17 @@ class ListController extends Controller
             auth()->id(),
         ];
 
-        // foreach($request->users as $uid) {
-        //     $user = User::findOrFail($uid);
-        //     $user->givePermissionsTo('update');
-        // }
+        foreach($request->users as $uid) {
+            $user = User::findOrFail($uid);
+
+            if ($request->canUpdate) {
+                $user->givePermissionsTo('update');
+            }
+
+            if ($request->canDelete) {
+                $user->givePermissionsTo('delete');
+            }
+        }
 
         if ($request->users) {
             $attachedUsersIds = array_merge($attachedUsersIds, $request->users);
@@ -102,6 +109,19 @@ class ListController extends Controller
             auth()->id(),
         ];
 
+        foreach($request->users as $uid) {
+            $user = User::findOrFail($uid);
+            $user->flushPermissions();
+
+            if ($request->canUpdate) {
+                $user->givePermissionsTo('update');
+            }
+
+            if ($request->canDelete) {
+                $user->givePermissionsTo('delete');
+            }
+        }
+
         if ($request->users) {
             $attachedUsersIds = array_merge($attachedUsersIds, $request->users);
         }
@@ -124,10 +144,14 @@ class ListController extends Controller
     {
         Gate::allowIf(fn (User $user) => $user->id === $list->owner_id);
 
-        if ($list->users()->count()) {
+        if ($list->tasks()->count()) {
             return to_route('lists.index')
                 ->with('message', __('You should remove all child tasks before remove this list'));
         }
+
+        $list->users()->each(function($user) {
+            $user->flushPermissions();
+        });
 
         $list->delete();
 

@@ -92,13 +92,17 @@
                                     role="button" tabindex="0" aria-hidden="true" title="{{ __('Undo') }}">
                                 </i>
                                 @endif
+                                @can('update', $list)
                                 <i wire:click="edit({{ $task->id }})" class="bi bi-pencil-square" role="button"
                                     tabindex="0" aria-hidden="true" title="{{ __('Edit') }}">
                                 </i>
+                                @endcan
+                                @can('delete', $list)
                                 <i wire:click="deleteConfirm('delete', {{ $task->id }})"
                                     class="bi bi-trash3 text-danger" role="button" tabindex="0" aria-hidden="true"
                                     title="{{ __('Delete') }}">
                                 </i>
+                                @endcan
                                 @endif
                             </div>
                         </div>
