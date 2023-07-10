@@ -27,7 +27,7 @@
                         @endif
                     </div>
                     <div class="card-footer d-flex flex-wrap gap-2">
-                        <a href="#" class="btn btn-dark">{{ __('View') }}</a>
+                        <a href="{{ route('lists.show', $list) }}" class="btn btn-dark">{{ __('View') }}</a>
                         <a href="{{ route('lists.edit', $list) }}" class="btn btn-dark">{{ __('Edit') }}</a>
                         <form action="{{ route('lists.destroy', $list) }}" method="POST">
                             @csrf
@@ -56,7 +56,7 @@
                         <p>{{ $list->getOwnerName() }}</p>
                     </div>
                     <div class="card-footer d-flex flex-wrap gap-2">
-                        <a href="#" class="btn btn-dark">{{ __('View') }}</a>
+                        <a href="{{ route('lists.show', $list) }}" class="btn btn-dark">{{ __('View') }}</a>
                         <a href="{{ route('lists.edit', $list) }}" class="btn btn-dark">{{ __('Edit') }}</a>
                         <form action="{{ route('lists.destroy', $list) }}" method="POST">
                             @csrf

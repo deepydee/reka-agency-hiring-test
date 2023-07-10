@@ -1,6 +1,6 @@
 <div class="row justify-content-center my-3">
     <div class="col-md-10 bg-white border shadow py-3 px-5">
-        <div class="fw-bold fs-5 text-indigo my-3">{{ __('Му TODO List') }}</div>
+        <div class="fw-bold my-3">{{ __('Му TODO List') }}</div>
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group mb-3">

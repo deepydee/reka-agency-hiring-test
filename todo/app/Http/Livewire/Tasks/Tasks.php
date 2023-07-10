@@ -9,12 +9,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
-class TaskList extends Component
+class Tasks extends Component
 {
-    use WithPagination, WithFileUploads;
+    use WithFileUploads;
 
+    public $list;
     public ?Task $task;
     public Collection $tasks;
     public ?array $tags = [];
@@ -58,7 +58,7 @@ class TaskList extends Component
         }
 
         $this->task->title = $this->taskTitle;
-        $this->task->user_id = auth()->user()->id;
+        $this->task->task_list_id = $this->list->id;
 
         $this->task->save();
 
@@ -126,7 +126,7 @@ class TaskList extends Component
     {
         $this->dispatchBrowserEvent('swal:confirm', [
             'type'   => 'warning',
-            'title'  => 'Вы уверены?',
+            'title'  => __('Are you sure?'),
             'text'   => '',
             'id'     => $id,
             'method' => $method,
@@ -140,12 +140,12 @@ class TaskList extends Component
 
     public function render(): View
     {
-        $this->tasks = Task::where('user_id', auth()->user()->id)
+        $this->tasks = Task::where('task_list_id', $this->list->id)
             ->with('tags')
             ->oldest('completed_at')
             ->latest('created_at')
             ->get();
 
-        return view('livewire.tasks.task-list');
+        return view('livewire.tasks.tasks');
     }
 }

@@ -66,9 +66,9 @@ class ListController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TaskList $list)
+    public function show(TaskList $list): View
     {
-        //
+        return view('lists.show', compact('list'));
     }
 
     /**
@@ -111,9 +111,14 @@ class ListController extends Controller
      */
     public function destroy(TaskList $list): RedirectResponse
     {
+        if ($list->users()->count()) {
+            return to_route('lists.index')
+                ->with('message', __('You should remove all child tasks before remove this list'));
+        }
+
         $list->delete();
 
         return to_route('lists.index')
-            ->with('message', "Task list '{$list->title}' has been successfully deleted");;
+            ->with('message', "Task list '{$list->title}' has been successfully deleted");
     }
 }

@@ -61,6 +61,8 @@
     "View": "Перейти",
     "Delete": "Удалить",
     "Undo": "Отменить",
+    "Back": "Назад",
+    "Are you sure?": "Вы уверены?",
     "Add tags": "Добавить теги",
     "View full sized photo": "Смотреть полноразмерное фото",
     "Delete image": "Удалить изображение",
@@ -72,5 +74,6 @@
     "My Shared Lists": "Списки других пользователей",
     "Add List": "Добавить список",
     "List owner": "Владелец списка",
-    "This list is also belongs to": "Этот список также принадлежит"
+    "This list is also belongs to": "Этот список также принадлежит",
+    "You should remove all child tasks before remove this list": "Вы должны удалить все дочерние задачи, прежде чем удалять этот список"
 }
