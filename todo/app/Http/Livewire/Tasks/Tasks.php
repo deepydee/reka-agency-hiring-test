@@ -22,6 +22,9 @@ class Tasks extends Component
     public int $editedTaskId = 0;
     public $thumbnail;
     public bool $updateThumb = false;
+    public array $searchColumns = [
+        'title' => '',
+    ];
 
     protected function rules(): array
     {
@@ -71,7 +74,7 @@ class Tasks extends Component
             $this->updateThumb = false;
         }
 
-        if (! empty($this->tags) && $this->tags[0] !== '') {
+        if (!empty($this->tags) && $this->tags[0] !== '') {
             $addedTagsIds = [];
 
             foreach ($this->tags as $tag) {
@@ -143,8 +146,16 @@ class Tasks extends Component
 
     public function render(): View
     {
-        $this->tasks = Task::where('task_list_id', $this->list->id)
-            ->with('tags')
+        $tasks = Task::where('task_list_id', $this->list->id)->with('tags');
+
+        foreach ($this->searchColumns as $column => $value) {
+            if (!empty($value)) {
+                $tasks
+                    ->when($column === 'title', fn ($tasks) => $tasks->where('title', 'LIKE', '%' . $value . '%'));
+            }
+        }
+
+        $this->tasks = $tasks
             ->oldest('completed_at')
             ->latest('created_at')
             ->get();

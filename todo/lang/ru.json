@@ -76,5 +76,6 @@
     "Add List": "Добавить список",
     "List owner": "Владелец списка",
     "This list is also belongs to": "Этот список также принадлежит",
-    "You should remove all child tasks before remove this list": "Вы должны удалить все дочерние задачи, прежде чем удалять этот список"
+    "You should remove all child tasks before remove this list": "Вы должны удалить все дочерние задачи, прежде чем удалять этот список",
+    "Search...": "Поиск..."
 }

@@ -28,13 +28,23 @@
                 <img src="{{ $thumbnail->temporaryURL() }}" alt="" class="img-thumbnail mr-3" width="150" height="150">
                 @endif
 
-                <input wire:model="thumbnail" id="thumbnail" name="thumbnail" type="file" class="custom-file-input"
+                <input wire:model="thumbnail" id="thumbnail" name="thumbnail" type="file" class="custom-file-input mb-3"
                     @error('thumbnail') is-invalid @enderror>
                 @error('thumbnail')
                 <span class="invalid-feedback">
                     {{ $message }}
                 </span>
                 @enderror
+            </div>
+
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        <input wire:model="searchColumns.title" type="text" id="searchTask" class="form-control py-2"
+                            placeholder="{{ __('Search...') }}" aria-label="search">
+                        <label for="addTask">{{ __('Search...') }}</label>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -54,10 +64,11 @@
                                 <a href="{{ $task->getFirstMediaURL('task-image') }}" target="_blank">
                                     <img src="{{ $task->getFirstMediaURL('task-image', 'thumb') }}"
                                         alt="{{ $task->title }}" width="150" height="150"
-                                        title="{{ __('View full sized photo') }}"
-                                        @class(['img-thumbnail', 'done'=> $task->completed_at])>
+                                        title="{{ __('View full sized photo') }}" @class(['img-thumbnail', 'done'=>
+                                    $task->completed_at])>
                                 </a>
-                                <i wire:click="deleteTaskImage({{ $task }})" class="bi bi-trash3 text-danger" role="button" title="{{ __('Delete image') }}"></i>
+                                <i wire:click="deleteTaskImage({{ $task }})" class="bi bi-trash3 text-danger"
+                                    role="button" title="{{ __('Delete image') }}"></i>
                                 @endif
 
                                 <span @class(['todo__title', 'text-decoration-line-through'=> $task->completed_at])>
