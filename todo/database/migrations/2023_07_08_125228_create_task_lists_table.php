@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('task_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->index();
-            $table->boolean('completed')->default(false);
-            $table->timestamp('completed_at')->nullable();
-            $table->foreignId('task_list_id')->constrained();
+            $table->string('title');
+            $table->foreignId('owner_id')->constrained('users', 'id');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('task_lists');
     }
 };

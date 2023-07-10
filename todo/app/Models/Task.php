@@ -19,7 +19,7 @@ class Task extends Model implements HasMedia
         'title',
         'completed',
         'completed_at',
-        'user_id',
+        'task_list_id',
     ];
 
     public function tags(): BelongsToMany
@@ -27,9 +27,9 @@ class Task extends Model implements HasMedia
         return $this->belongsToMany(Tag::class);
     }
 
-    public function user(): BelongsTo
+    public function taskList(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(TaskList::class);
     }
 
     public function registerMediaCollections(): void
