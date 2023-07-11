@@ -14,8 +14,6 @@ Required functionality:
 
 A separate plus if you can deploy the project yourself and provide a link to it
 The result should be uploaded to the public GitHub repository.
-
-Translated with www.DeepL.com/Translator (free version)
 ## Stack
 - PHP 8.1
 - Laravel 10
