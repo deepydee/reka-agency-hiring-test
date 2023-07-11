@@ -46,10 +46,11 @@ Url: /login
 6. Install node modules `npm ci`
 7. Generate a key `php artisan key:generate`
 8. Run all migrations `php artisan migrate`
-9. Populate DB with a wonderful fake data `php artisan db:seed`
-10. Set permissions to storage and cache folders `sudo chmod -R 755 storage` `sudo chmod -R bootstrap/cache`
-11. Run local server `php artisan serve`
-12. Run vite bundler `npm run dev`
+9. Create a storage symlink `php artisan storage:link`
+10. Populate DB with a wonderful fake data `php artisan db:seed`
+11. Set permissions to storage and cache folders `sudo chmod -R 755 storage` `sudo chmod -R bootstrap/cache`
+12. Run local server `php artisan serve`
+13. Run vite bundler `npm run dev`
 
 The project should be available at http://localhost:8000
 
