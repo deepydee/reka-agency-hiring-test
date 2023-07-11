@@ -25,6 +25,7 @@ class StoreTaskListRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'canUpdate' => ['nullable'],
             'canDelete' => ['nullable'],
+            'thumbnail' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

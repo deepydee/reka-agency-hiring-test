@@ -15,6 +15,7 @@
         @forelse ($myLists as $list)
         <div class="col col-md-6 col-lg-4">
             <div class="card">
+                <img src="{{ $list->getFirstMediaUrl('list-image', 'thumb') }}" class="card-img-top" alt="{{ $list->title }}">
                 <div class="card-body">
                     <h5 class="card-title fw-bold mb-3">{{ $list->title }}</h5>
                     @if ($list->getUsersNamesListBelongsTo())
@@ -45,6 +46,7 @@
             @forelse ($sharedLists as $list)
             <div class="col col-md-6 col-lg-4">
                 <div class="card">
+                    <img src="{{ $list->getFirstMediaUrl('list-image', 'thumb') }}" class="card-img-top" alt="{{ $list->title }}">
                     <div class="card-body">
                         <h5 class="card-title fw-bold mb-3">{{ $list->title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ __('List owner') }}:</h6>

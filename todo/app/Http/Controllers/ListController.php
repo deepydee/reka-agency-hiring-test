@@ -69,10 +69,15 @@ class ListController extends Controller
             'owner_id' => auth()->id(),
         ]);
 
+        if ($request->hasFile('thumbnail')) {
+            $list->addMediaFromRequest('thumbnail')
+                ->toMediaCollection('list-image');
+        }
+
         $list->users()->sync($attachedUsersIds);
 
         return to_route('lists.index')
-            ->with('message', "Task list '{$list->title}' has been successfully created");
+            ->with('message', __('Task list has been successfully created'));
     }
 
     /**
@@ -110,7 +115,6 @@ class ListController extends Controller
         ];
 
         if ($request->users) {
-            dd($request->users);
             foreach ($request->users as $uid) {
                 $user = User::findOrFail($uid);
                 $user->flushPermissions();
@@ -132,10 +136,21 @@ class ListController extends Controller
             'owner_id' => auth()->id(),
         ]);
 
+        if ($request->deleteThumb) {
+            $list->clearMediaCollection('list-image');
+        }
+
+        if ($request->hasFile('thumbnail')) {
+            $list->clearMediaCollection('list-image');
+
+            $list->addMediaFromRequest('thumbnail')
+                ->toMediaCollection('list-image');
+        }
+
         $list->users()->sync($attachedUsersIds);
 
         return to_route('lists.index')
-            ->with('message', "Task list '{$list->title}' has been successfully updated");
+            ->with('message', __('Task list has been successfully updated'));
     }
 
     /**
@@ -157,6 +172,6 @@ class ListController extends Controller
         $list->delete();
 
         return to_route('lists.index')
-            ->with('message', "Task list '{$list->title}' has been successfully deleted");
+            ->with('message', __('Task list has been successfully deleted'));
     }
 }

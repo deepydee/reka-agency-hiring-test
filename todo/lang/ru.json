@@ -79,5 +79,11 @@
     "You should remove all child tasks before remove this list": "Вы должны удалить все дочерние задачи, прежде чем удалять этот список",
     "Search...": "Поиск...",
     "Can update": "Может обновлять",
-    "Can delete": "Может удалять"
+    "Can delete": "Может удалять",
+    "My new TODO": "Мой новый список",
+    "Thumbnail": "Обложка",
+    "It should be a .jpg, .jpeg, .png, .gif file with max size of 2MB": "Это должен быть файл формата .jpg, .jpeg, .png, .gif размером не более 2 МБ.",
+    "Task list has been successfully created": "Список задач успешно создан",
+    "Task list has been successfully updated": "Список задач успешно обновлен",
+    "Task list has been successfully deleted": "Список задач успешно удален"
 }
