@@ -81,6 +81,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="footer bg-gray text-center mt-auto py-3">
+            <p>&copy; 2023 Vitalii Semenov <a href="https://github.com/deepydee/reka-agency-hiring-test">GitHub</a></p>
+        </footer>
     </div>
     @livewireScripts
     @stack('js')

@@ -110,6 +110,7 @@ class ListController extends Controller
         ];
 
         if ($request->users) {
+            dd($request->users);
             foreach ($request->users as $uid) {
                 $user = User::findOrFail($uid);
                 $user->flushPermissions();

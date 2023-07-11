@@ -22,7 +22,7 @@ class TaskSeeder extends Seeder
             mkdir($filePath, 0755, true);
         }
 
-        Task::factory(15)
+        Task::factory(50)
             ->create()
             ->each(function ($task) use ($filePath, $faker, $date) {
                 $task->tags()->sync(Tag::factory(rand(1, 5))->create());

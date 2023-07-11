@@ -11,8 +11,7 @@
         </div>
     </div>
 
-    <div class="row mb-5">
-        @livewire('tasks.tasks', ['list' => $list])
-    </div>
+    @livewire('tasks.tasks', ['list' => $list])
+
 </div>
 @endsection

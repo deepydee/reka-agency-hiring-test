@@ -16,7 +16,7 @@ class TaskListSeeder extends Seeder
     {
         $users = User::all();
 
-        TaskList::factory(10)
+        TaskList::factory(20)
             ->create()
             ->each(function ($list) use ($users) {
                 $list->users()->sync($users->random(4));
