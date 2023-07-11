@@ -48,19 +48,19 @@ class ListController extends Controller
             auth()->id(),
         ];
 
-        foreach($request->users as $uid) {
-            $user = User::findOrFail($uid);
-
-            if ($request->canUpdate) {
-                $user->givePermissionsTo('update');
-            }
-
-            if ($request->canDelete) {
-                $user->givePermissionsTo('delete');
-            }
-        }
-
         if ($request->users) {
+            foreach ($request->users as $uid) {
+                $user = User::findOrFail($uid);
+
+                if ($request->canUpdate) {
+                    $user->givePermissionsTo('update');
+                }
+
+                if ($request->canDelete) {
+                    $user->givePermissionsTo('delete');
+                }
+            }
+
             $attachedUsersIds = array_merge($attachedUsersIds, $request->users);
         }
 
@@ -109,20 +109,20 @@ class ListController extends Controller
             auth()->id(),
         ];
 
-        foreach($request->users as $uid) {
-            $user = User::findOrFail($uid);
-            $user->flushPermissions();
-
-            if ($request->canUpdate) {
-                $user->givePermissionsTo('update');
-            }
-
-            if ($request->canDelete) {
-                $user->givePermissionsTo('delete');
-            }
-        }
-
         if ($request->users) {
+            foreach ($request->users as $uid) {
+                $user = User::findOrFail($uid);
+                $user->flushPermissions();
+
+                if ($request->canUpdate) {
+                    $user->givePermissionsTo('update');
+                }
+
+                if ($request->canDelete) {
+                    $user->givePermissionsTo('delete');
+                }
+            }
+
             $attachedUsersIds = array_merge($attachedUsersIds, $request->users);
         }
 
@@ -149,7 +149,7 @@ class ListController extends Controller
                 ->with('message', __('You should remove all child tasks before remove this list'));
         }
 
-        $list->users()->each(function($user) {
+        $list->users()->each(function ($user) {
             $user->flushPermissions();
         });
 
